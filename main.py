@@ -3,6 +3,9 @@ from player import Player
 from constants import *
 def main():
     pygame.init()
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
     clock = pygame.time.Clock()
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -19,8 +22,9 @@ def main():
                 return
         dt = clock.tick(60) / 1000
         screen.fill("black")
-        my_player.update(dt)
-        my_player.draw(screen)
+        updatable.update(dt)
+        for thing in drawable:
+            thing.draw(screen)
         pygame.display.flip()
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
